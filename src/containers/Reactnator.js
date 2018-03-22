@@ -1,7 +1,9 @@
 import { compose, withHandlers } from 'recompose'
 import smoothscroll from 'smoothscroll-polyfill'
 
-smoothscroll.polyfill()
+const isClient = () => !!(
+  typeof window !== 'undefined' && window.document && window.document.createElement
+)
 
 const scrollTop = (position = 0) => {
 	window.scroll({
@@ -9,6 +11,8 @@ const scrollTop = (position = 0) => {
 		behavior: 'smooth'
 	})
 }
+
+isClient ? smoothscroll.polyfill() : null
 
 export default compose(
 	withHandlers({
