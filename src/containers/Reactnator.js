@@ -1,18 +1,16 @@
 import { compose, withHandlers } from 'recompose'
-import smoothscroll from 'smoothscroll-polyfill'
 
 const isClient = () => !!(
   typeof window !== 'undefined' && window.document && window.document.createElement
 )
 
 const scrollTop = (position = 0) => {
-	window.scroll({
-		top: position,
-		behavior: 'smooth'
-	})
+  isClient
+    ? window.scroll({
+      top: position,
+      behavior: 'smooth'
+    }) : null
 }
-
-isClient ? smoothscroll.polyfill() : null
 
 export default compose(
 	withHandlers({
