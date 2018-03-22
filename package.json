@@ -31,7 +31,6 @@
     "classnames": "^2.2.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "recompose": "^0.26.0",
-    "smoothscroll-polyfill": "^0.4.3"
+    "recompose": "^0.26.0"
   }
 }
