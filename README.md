@@ -16,6 +16,13 @@ or you can use NPM aswell
 * ReactDOM
 * Recompose
 
+### Api Reference
+
+* total: 1,
+* currentPage: 1,
+* onChange: e => console.log(e),
+* position: false
+
 ### License
 
 Licensed under the MIT license.
