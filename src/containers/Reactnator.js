@@ -1,23 +1,25 @@
 import { compose, withHandlers } from 'recompose'
+import scrollToTarget from 'scroll-to-target'
 
 const isClient = () => !!(
   typeof window !== 'undefined' && window.document && window.document.createElement
 )
 
-const scrollTop = (position = 0) => {
-  isClient
-    ? window.scroll({
-      top: position,
-      behavior: 'smooth'
-    }) : null
+const scrollTop = ({ selector, speed, offset }) => {
+  isClient()
+    ? scrollToTarget(
+      selector,
+      speed,
+      offset
+    ) : null
 }
 
 export default compose(
 	withHandlers({
-		handleClick: () => (page, currentPage, totalPages, onChange, position) => () => {
+		handleClick: () => (page, currentPage, totalPages, onChange, scrollTo) => () => {
       if (page === '...') return null
 
-			position ? scrollTop(position) : null
+			scrollTo ? scrollTop(scrollTo) : null
 
 			if (page === 'more' && currentPage !== totalPages)
         onChange(currentPage + 1)

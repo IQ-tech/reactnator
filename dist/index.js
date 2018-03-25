@@ -102,26 +102,29 @@ var _Reactnator = __webpack_require__(3);
 
 var _Reactnator2 = _interopRequireDefault(_Reactnator);
 
-var _dotPaginator = __webpack_require__(14);
+var _dotPaginator = __webpack_require__(15);
 
 var _dotPaginator2 = _interopRequireDefault(_dotPaginator);
 
-__webpack_require__(15);
+__webpack_require__(16);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var isActive = function isActive() {
 	var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 	var page = arguments[1];
-	return (0, _classnames2.default)({
-		'reactnator__page-number': page !== '...',
-		'reactnator__dots': page === '...',
-		'reactnator__page-number--active': status
-	});
+
+	var _classNames;
+
+	var pageNumberStyle = arguments[2];
+	var activePageStyle = arguments[3];
+	return (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, pageNumberStyle, page !== '...'), _defineProperty(_classNames, 'reactnator__dots', page === '...'), _defineProperty(_classNames, activePageStyle, status), _classNames));
 };
 
-var arrowStyle = function arrowStyle(direction) {
-	return (0, _classnames2.default)('reactnator__page-number', 'reactnator__arrow', 'reactnator__arrow--' + direction);
+var arrowStyle = function arrowStyle(direction, pageNumberStyle) {
+	return (0, _classnames2.default)(pageNumberStyle, 'reactnator__arrow', 'reactnator__arrow--' + direction);
 };
 
 var Reactnator = function Reactnator(_ref) {
@@ -129,7 +132,9 @@ var Reactnator = function Reactnator(_ref) {
 	    currentPage = _ref.currentPage,
 	    handleClick = _ref.handleClick,
 	    onChange = _ref.onChange,
-	    position = _ref.position;
+	    scrollTo = _ref.scrollTo,
+	    pageNumberStyle = _ref.pageNumberStyle,
+	    activePageStyle = _ref.activePageStyle;
 	return React.createElement(
 		'div',
 		{ className: 'reactnator' },
@@ -137,23 +142,23 @@ var Reactnator = function Reactnator(_ref) {
 			'div',
 			{ className: 'reactnator__content' },
 			React.createElement('li', {
-				className: arrowStyle('left'),
-				onClick: handleClick('less', currentPage, total, onChange, position)
+				className: arrowStyle('left', pageNumberStyle),
+				onClick: handleClick('less', currentPage, total, onChange, scrollTo)
 			}),
 			(0, _dotPaginator2.default)({ total: total, activePage: currentPage }).map(function (page, index) {
 				return React.createElement(
 					'li',
 					{
-						className: isActive(currentPage === page, page),
+						className: isActive(currentPage === page, page, pageNumberStyle, activePageStyle),
 						key: index,
-						onClick: handleClick(page, currentPage, total, onChange, position)
+						onClick: handleClick(page, currentPage, total, onChange, scrollTo)
 					},
 					page
 				);
 			}),
 			React.createElement('li', {
-				className: arrowStyle('right'),
-				onClick: handleClick('more', currentPage, total, onChange, position)
+				className: arrowStyle('right', pageNumberStyle),
+				onClick: handleClick('more', currentPage, total, onChange, scrollTo)
 			})
 		)
 	);
@@ -165,7 +170,9 @@ Reactnator.defaultProps = {
 	onChange: function onChange(e) {
 		return console.log(e);
 	},
-	position: false
+	scrollTo: false,
+	pageNumberStyle: 'reactnator__page-number',
+	activePageStyle: 'reactnator__page-number--active'
 };
 
 exports.default = (0, _Reactnator2.default)(Reactnator);
@@ -238,26 +245,31 @@ Object.defineProperty(exports, "__esModule", {
 
 var _recompose = __webpack_require__(4);
 
+var _scrollToTarget = __webpack_require__(14);
+
+var _scrollToTarget2 = _interopRequireDefault(_scrollToTarget);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var isClient = function isClient() {
   return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 };
 
-var scrollTop = function scrollTop() {
-  var position = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+var scrollTop = function scrollTop(_ref) {
+  var selector = _ref.selector,
+      speed = _ref.speed,
+      offset = _ref.offset;
 
-  isClient ? window.scroll({
-    top: position,
-    behavior: 'smooth'
-  }) : null;
+  isClient() ? (0, _scrollToTarget2.default)(selector, speed, offset) : null;
 };
 
 exports.default = (0, _recompose.compose)((0, _recompose.withHandlers)({
   handleClick: function handleClick() {
-    return function (page, currentPage, totalPages, onChange, position) {
+    return function (page, currentPage, totalPages, onChange, scrollTo) {
       return function () {
         if (page === '...') return null;
 
-        position ? scrollTop(position) : null;
+        scrollTo ? scrollTop(scrollTo) : null;
 
         if (page === 'more' && currentPage !== totalPages) onChange(currentPage + 1);else if (page === 'less' && currentPage > 1) onChange(currentPage + 1);else if (page >= 1 && page <= totalPages) onChange(page);
       };
@@ -1861,6 +1873,13 @@ function symbolObservablePonyfill(root) {
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
+!function(e,n){ true?module.exports=n():"function"==typeof define&&define.amd?define(n):e.scrollToTarget=n()}(this,function(){"use strict";var e=function(e,n,t){if("string"!=typeof e)throw new Error("Invalid selector. It must be a string");if("number"!=typeof n)throw new Error("Invalid speed. It must be a number.");if("number"!=typeof t)throw new Error("Invalid offset. It must be a number.");return!0},n=function(e,n){var t=e.getBoundingClientRect();return window.pageYOffset+t.top-n},t=function(e,n){return window.pageYOffset-e>0?Math.max(window.pageYOffset-n,e):Math.min(window.pageYOffset+n,e)},o=function(e,n){window.scrollInterval=setInterval(function(){var o=t(e,n),r=document.body.scrollHeight-window.innerHeight;window.scrollTo(0,o),(window.scrollTarget!==e||o>r||o===e)&&(delete window.scrollTarget,clearInterval(window.scrollInterval))},16)},r=function e(n,o){var r=t(n,o),i=document.body.scrollHeight-window.innerHeight;if(window.scrollTo(0,r),window.scrollTarget===n&&r<=i&&r!==n)return requestAnimationFrame(function(){return e(n,o)});delete window.scrollTarget},i=function(e,n){var t=e-window.pageYOffset,i=Math.abs(t/(n/1e3*60));window.scrollTarget=e,"requestAnimationFrame"in window?r(e,i):o(e,i)};return function(t){var o=arguments.length>1&&void 0!==arguments[1]?arguments[1]:300,r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0;if(e(t,o,r)){clearInterval(window.scrollInterval);var l=document.querySelector(t),a=n(l,r);i(a,o)}}});
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -1945,7 +1964,7 @@ var pagination = function pagination() {
 exports.default = pagination;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
