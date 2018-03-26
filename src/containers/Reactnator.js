@@ -24,7 +24,7 @@ export default compose(
 			if (page === 'more' && currentPage !== totalPages)
         onChange(currentPage + 1)
 			else if (page === 'less' && currentPage > 1)
-        onChange(currentPage + 1)
+        onChange(currentPage - 1)
 			else if (page >= 1 && page <= totalPages)
         onChange(page)
 		}

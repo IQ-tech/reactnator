@@ -271,7 +271,7 @@ exports.default = (0, _recompose.compose)((0, _recompose.withHandlers)({
 
         scrollTo ? scrollTop(scrollTo) : null;
 
-        if (page === 'more' && currentPage !== totalPages) onChange(currentPage + 1);else if (page === 'less' && currentPage > 1) onChange(currentPage + 1);else if (page >= 1 && page <= totalPages) onChange(page);
+        if (page === 'more' && currentPage !== totalPages) onChange(currentPage + 1);else if (page === 'less' && currentPage > 1) onChange(currentPage - 1);else if (page >= 1 && page <= totalPages) onChange(page);
       };
     };
   }
