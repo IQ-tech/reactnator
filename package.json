@@ -3,6 +3,15 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
+  "author": "IQ-Tech",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IQ-tech/reactnator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IQ-tech/reactnator/issues"
+  },
+  "homepage": "https://github.com/IQ-tech/reactnator#readme",
   "pearDependencies": {
     "classnames": "^2.2.5",
     "react": "^16.0.0",
