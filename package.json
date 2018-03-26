@@ -1,5 +1,5 @@
 {
-  "name": "reactnator",
+  "name": "@iq-tech/reactnator",
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
@@ -7,7 +7,8 @@
     "classnames": "^2.2.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "recompose": "^0.26.0"
+    "recompose": "^0.26.0",
+    "scroll-to-target": "^0.0.8"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
