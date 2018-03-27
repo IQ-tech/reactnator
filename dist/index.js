@@ -143,7 +143,7 @@ var Reactnator = function Reactnator(_ref) {
 			{ className: 'reactnator__content' },
 			React.createElement('li', {
 				className: arrowStyle('left', pageNumberStyle),
-				onClick: handleClick('less', currentPage, total, onChange, scrollTo)
+				onClick: handleClick('less')
 			}),
 			(0, _dotPaginator2.default)({ total: total, activePage: currentPage }).map(function (page, index) {
 				return React.createElement(
@@ -151,14 +151,14 @@ var Reactnator = function Reactnator(_ref) {
 					{
 						className: isActive(currentPage === page, page, pageNumberStyle, activePageStyle),
 						key: index,
-						onClick: handleClick(page, currentPage, total, onChange, scrollTo)
+						onClick: handleClick(page)
 					},
 					page
 				);
 			}),
 			React.createElement('li', {
 				className: arrowStyle('right', pageNumberStyle),
-				onClick: handleClick('more', currentPage, total, onChange, scrollTo)
+				onClick: handleClick('more')
 			})
 		)
 	);
@@ -264,14 +264,18 @@ var scrollTop = function scrollTop(_ref) {
 };
 
 exports.default = (0, _recompose.compose)((0, _recompose.withHandlers)({
-  handleClick: function handleClick() {
-    return function (page, currentPage, totalPages, onChange, scrollTo) {
+  handleClick: function handleClick(_ref2) {
+    var currentPage = _ref2.currentPage,
+        total = _ref2.total,
+        onChange = _ref2.onChange,
+        scrollTo = _ref2.scrollTo;
+    return function (page) {
       return function () {
         if (page === '...') return null;
 
         scrollTo ? scrollTop(scrollTo) : null;
 
-        if (page === 'more' && currentPage !== totalPages) onChange(currentPage + 1);else if (page === 'less' && currentPage > 1) onChange(currentPage - 1);else if (page >= 1 && page <= totalPages) onChange(page);
+        if (page === 'more' && currentPage !== total) onChange(currentPage + 1);else if (page === 'less' && currentPage > 1) onChange(currentPage - 1);else if (page >= 1 && page <= total) onChange(page);
       };
     };
   }

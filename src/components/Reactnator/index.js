@@ -28,18 +28,18 @@ const Reactnator = ({
 		<div className="reactnator__content">
 			<li
 				className={arrowStyle('left', pageNumberStyle)}
-				onClick={handleClick('less', currentPage, total, onChange, scrollTo)}
+				onClick={handleClick('less')}
       />
 			{pagination({ total, activePage: currentPage }).map((page, index) => (
 				<li
 					className={isActive(currentPage === page, page, pageNumberStyle, activePageStyle)}
 					key={index}
-					onClick={handleClick(page, currentPage, total, onChange, scrollTo)}
+					onClick={handleClick(page)}
 				>{page}</li>
 			))}
 			<li
 				className={arrowStyle('right', pageNumberStyle)}
-				onClick={handleClick('more', currentPage, total, onChange, scrollTo)}
+				onClick={handleClick('more')}
       />
 		</div>
 	</div>
