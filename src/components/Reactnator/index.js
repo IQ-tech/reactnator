@@ -25,23 +25,34 @@ const Reactnator = ({
   activePageStyle
 }) => (
 	<div className="reactnator">
-		<div className="reactnator__content">
+		<ul className="reactnator__content">
 			<li
 				className={arrowStyle('left', pageNumberStyle)}
-				onClick={handleClick('less')}
+      >
+      <a 
+      	onClick={handleClick('less')}
       />
+      </li>
 			{pagination({ total, activePage: currentPage }).map((page, index) => (
 				<li
 					className={isActive(currentPage === page, page, pageNumberStyle, activePageStyle)}
 					key={index}
-					onClick={handleClick(page)}
-				>{page}</li>
+				>
+				<a
+					onClick={handleClick(page)} 
+				>
+				{page}
+				</a>
+				</li>
 			))}
 			<li
 				className={arrowStyle('right', pageNumberStyle)}
-				onClick={handleClick('more')}
+      >
+      <a
+      	onClick={handleClick('more')}
       />
-		</div>
+      </li>
+		</ul>
 	</div>
 )
 

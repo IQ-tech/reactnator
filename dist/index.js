@@ -91,7 +91,7 @@ exports.default = _Reactnator2.default;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _classnames = __webpack_require__(2);
@@ -113,66 +113,40 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var isActive = function isActive() {
-	var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-	var page = arguments[1];
+  var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var page = arguments[1];
 
-	var _classNames;
+  var _classNames;
 
-	var pageNumberStyle = arguments[2];
-	var activePageStyle = arguments[3];
-	return (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, pageNumberStyle, page !== '...'), _defineProperty(_classNames, 'reactnator__dots', page === '...'), _defineProperty(_classNames, activePageStyle, status), _classNames));
+  var pageNumberStyle = arguments[2];
+  var activePageStyle = arguments[3];
+  return (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, pageNumberStyle, page !== '...'), _defineProperty(_classNames, 'reactnator__dots', page === '...'), _defineProperty(_classNames, activePageStyle, status), _classNames));
 };
 
 var arrowStyle = function arrowStyle(direction, pageNumberStyle) {
-	return (0, _classnames2.default)(pageNumberStyle, 'reactnator__arrow', 'reactnator__arrow--' + direction);
+  return (0, _classnames2.default)(pageNumberStyle, 'reactnator__arrow', 'reactnator__arrow--' + direction);
 };
 
 var Reactnator = function Reactnator(_ref) {
-	var total = _ref.total,
-	    currentPage = _ref.currentPage,
-	    handleClick = _ref.handleClick,
-	    onChange = _ref.onChange,
-	    scrollTo = _ref.scrollTo,
-	    pageNumberStyle = _ref.pageNumberStyle,
-	    activePageStyle = _ref.activePageStyle;
-	return React.createElement(
-		'div',
-		{ className: 'reactnator' },
-		React.createElement(
-			'div',
-			{ className: 'reactnator__content' },
-			React.createElement('li', {
-				className: arrowStyle('left', pageNumberStyle),
-				onClick: handleClick('less')
-			}),
-			(0, _dotPaginator2.default)({ total: total, activePage: currentPage }).map(function (page, index) {
-				return React.createElement(
-					'li',
-					{
-						className: isActive(currentPage === page, page, pageNumberStyle, activePageStyle),
-						key: index,
-						onClick: handleClick(page)
-					},
-					page
-				);
-			}),
-			React.createElement('li', {
-				className: arrowStyle('right', pageNumberStyle),
-				onClick: handleClick('more')
-			})
-		)
-	);
+  var total = _ref.total,
+      currentPage = _ref.currentPage,
+      handleClick = _ref.handleClick,
+      onChange = _ref.onChange,
+      scrollTo = _ref.scrollTo,
+      pageNumberStyle = _ref.pageNumberStyle,
+      activePageStyle = _ref.activePageStyle;
+  return React.createElement('div', { className: 'reactnator' });
 };
 
 Reactnator.defaultProps = {
-	total: 1,
-	currentPage: 1,
-	onChange: function onChange(e) {
-		return console.log(e);
-	},
-	scrollTo: false,
-	pageNumberStyle: 'reactnator__page-number',
-	activePageStyle: 'reactnator__page-number--active'
+  total: 1,
+  currentPage: 1,
+  onChange: function onChange(e) {
+    return console.log(e);
+  },
+  scrollTo: false,
+  pageNumberStyle: 'reactnator__page-number',
+  activePageStyle: 'reactnator__page-number--active'
 };
 
 exports.default = (0, _Reactnator2.default)(Reactnator);
