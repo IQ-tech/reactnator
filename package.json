@@ -1,5 +1,5 @@
 {
-  "name": "@iq-tech/reactnator",
+  "name": "reactnator",
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
