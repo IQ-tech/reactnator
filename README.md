@@ -1,5 +1,7 @@
 # Reactnator
 
+The easier way to paginate things
+
 ### Installing
 
 In your project folder, type on console
