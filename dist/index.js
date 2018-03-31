@@ -91,7 +91,7 @@ exports.default = _Reactnator2.default;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _classnames = __webpack_require__(2);
@@ -113,66 +113,85 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var isActive = function isActive() {
-	var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-	var page = arguments[1];
+  var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var page = arguments[1];
 
-	var _classNames;
+  var _classNames;
 
-	var pageNumberStyle = arguments[2];
-	var activePageStyle = arguments[3];
-	return (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, pageNumberStyle, page !== '...'), _defineProperty(_classNames, 'reactnator__dots', page === '...'), _defineProperty(_classNames, activePageStyle, status), _classNames));
+  var pageNumberStyle = arguments[2];
+  var activePageStyle = arguments[3];
+  return (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, pageNumberStyle, page !== '...'), _defineProperty(_classNames, 'reactnator__dots', page === '...'), _defineProperty(_classNames, activePageStyle, status), _classNames));
 };
 
 var arrowStyle = function arrowStyle(direction, pageNumberStyle) {
-	return (0, _classnames2.default)(pageNumberStyle, 'reactnator__arrow', 'reactnator__arrow--' + direction);
+  return (0, _classnames2.default)('reactnator__arrow', 'reactnator__arrow--' + direction);
 };
 
 var Reactnator = function Reactnator(_ref) {
-	var total = _ref.total,
-	    currentPage = _ref.currentPage,
-	    handleClick = _ref.handleClick,
-	    onChange = _ref.onChange,
-	    scrollTo = _ref.scrollTo,
-	    pageNumberStyle = _ref.pageNumberStyle,
-	    activePageStyle = _ref.activePageStyle;
-	return React.createElement(
-		'div',
-		{ className: 'reactnator' },
-		React.createElement(
-			'div',
-			{ className: 'reactnator__content' },
-			React.createElement('li', {
-				className: arrowStyle('left', pageNumberStyle),
-				onClick: handleClick('less')
-			}),
-			(0, _dotPaginator2.default)({ total: total, activePage: currentPage }).map(function (page, index) {
-				return React.createElement(
-					'li',
-					{
-						className: isActive(currentPage === page, page, pageNumberStyle, activePageStyle),
-						key: index,
-						onClick: handleClick(page)
-					},
-					page
-				);
-			}),
-			React.createElement('li', {
-				className: arrowStyle('right', pageNumberStyle),
-				onClick: handleClick('more')
-			})
-		)
-	);
+  var total = _ref.total,
+      currentPage = _ref.currentPage,
+      handleClick = _ref.handleClick,
+      onChange = _ref.onChange,
+      scrollTo = _ref.scrollTo,
+      pageNumberStyle = _ref.pageNumberStyle,
+      activePageStyle = _ref.activePageStyle,
+      Action = _ref.Action;
+  return React.createElement(
+    'div',
+    { className: 'reactnator' },
+    React.createElement(
+      'ul',
+      { className: 'reactnator__content' },
+      React.createElement(
+        'li',
+        { className: 'reactnator__page-number' },
+        React.createElement(Action, {
+          style: arrowStyle('left', pageNumberStyle),
+          onClick: handleClick('less'),
+          page: 'less'
+        })
+      ),
+      (0, _dotPaginator2.default)({ total: total, activePage: currentPage }).map(function (page, index) {
+        return React.createElement(
+          'li',
+          {
+            key: index,
+            className: isActive(currentPage === page, page, pageNumberStyle, activePageStyle)
+          },
+          React.createElement(
+            Action,
+            {
+              onClick: handleClick(page),
+              page: page
+            },
+            page
+          )
+        );
+      }),
+      React.createElement(
+        'li',
+        { className: 'reactnator__page-number' },
+        React.createElement(Action, {
+          onClick: handleClick('more'),
+          style: arrowStyle('right', pageNumberStyle),
+          page: 'more'
+        })
+      )
+    )
+  );
 };
 
 Reactnator.defaultProps = {
-	total: 1,
-	currentPage: 1,
-	onChange: function onChange(e) {
-		return console.log(e);
-	},
-	scrollTo: false,
-	pageNumberStyle: 'reactnator__page-number',
-	activePageStyle: 'reactnator__page-number--active'
+  total: 1,
+  currentPage: 1,
+  onChange: function onChange(e) {
+    return console.log(e);
+  },
+  scrollTo: false,
+  type: 'button',
+  link: '#',
+  pageNumberStyle: 'reactnator__page-number',
+  activePageStyle: 'reactnator__page-number--active'
 };
 
 exports.default = (0, _Reactnator2.default)(Reactnator);
@@ -243,6 +262,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _recompose = __webpack_require__(4);
 
 var _scrollToTarget = __webpack_require__(14);
@@ -263,6 +284,10 @@ var scrollTop = function scrollTop(_ref) {
   isClient() ? (0, _scrollToTarget2.default)(selector, speed, offset) : null;
 };
 
+var generateLink = function generateLink(page, currentPage, total, link) {
+  if (page === 'more' && currentPage !== total) return { href: '' + link + (currentPage + 1) };else if (page === 'less' && currentPage > 1) return { href: '' + link + (currentPage - 1) };else if (page >= 1 && page <= total && page !== currentPage) return { href: '' + link + page };else return null;
+};
+
 exports.default = (0, _recompose.compose)((0, _recompose.withHandlers)({
   handleClick: function handleClick(_ref2) {
     var currentPage = _ref2.currentPage,
@@ -273,12 +298,36 @@ exports.default = (0, _recompose.compose)((0, _recompose.withHandlers)({
       return function () {
         if (page === '...') return null;
 
-        scrollTo ? scrollTop(scrollTo) : null;
+        if (page === 'more' && currentPage !== total) onChange(currentPage + 1);else if (page === 'less' && currentPage > 1) onChange(currentPage - 1);else if (page >= 1 && page <= total && page !== currentPage) onChange(page);else return null;
 
-        if (page === 'more' && currentPage !== total) onChange(currentPage + 1);else if (page === 'less' && currentPage > 1) onChange(currentPage - 1);else if (page >= 1 && page <= total) onChange(page);
+        scrollTo ? scrollTop(scrollTo) : null;
       };
     };
+  },
+  Action: function Action(_ref3) {
+    var type = _ref3.type,
+        link = _ref3.link,
+        currentPage = _ref3.currentPage,
+        total = _ref3.total;
+    return function (_ref4) {
+      var style = _ref4.style,
+          onClick = _ref4.onClick,
+          children = _ref4.children,
+          page = _ref4.page;
+      return type === 'link' ? React.createElement(
+        'a',
+        _extends({
+          className: style
+        }, generateLink(page, currentPage, total, link)),
+        children
+      ) : React.createElement(
+        'a',
+        { className: style, onClick: onClick },
+        children
+      );
+    };
   }
+  // TODO add react-router instead of null
 }));
 
 /***/ }),

@@ -10,7 +10,6 @@ const isActive = (status = false, page, pageNumberStyle, activePageStyle) => cla
 })
 
 const arrowStyle = (direction, pageNumberStyle) => classNames(
-	pageNumberStyle,
   'reactnator__arrow',
   `reactnator__arrow--${direction}`
 )
@@ -22,26 +21,37 @@ const Reactnator = ({
   onChange,
   scrollTo,
   pageNumberStyle,
-  activePageStyle
+  activePageStyle,
+  Action
 }) => (
 	<div className="reactnator">
-		<div className="reactnator__content">
-			<li
-				className={arrowStyle('left', pageNumberStyle)}
-				onClick={handleClick('less')}
-      />
+		<ul className="reactnator__content">
+      <li className="reactnator__page-number">
+        <Action
+          style={arrowStyle('left', pageNumberStyle)}
+          onClick={handleClick('less')}
+          page='less'
+        />
+      </li>
 			{pagination({ total, activePage: currentPage }).map((page, index) => (
 				<li
-					className={isActive(currentPage === page, page, pageNumberStyle, activePageStyle)}
 					key={index}
-					onClick={handleClick(page)}
-				>{page}</li>
+          className={isActive(currentPage === page, page, pageNumberStyle, activePageStyle)}
+        >
+          <Action
+            onClick={handleClick(page)}
+            page={page}
+          >{page}</Action>
+        </li>
 			))}
-			<li
-				className={arrowStyle('right', pageNumberStyle)}
-				onClick={handleClick('more')}
-      />
-		</div>
+      <li className="reactnator__page-number">
+        <Action
+          onClick={handleClick('more')}
+          style={arrowStyle('right', pageNumberStyle)}
+          page='more'
+        />
+      </li>
+		</ul>
 	</div>
 )
 
@@ -50,6 +60,8 @@ Reactnator.defaultProps = {
   currentPage: 1,
   onChange: e => console.log(e),
   scrollTo: false,
+  type: 'button',
+  link: '#',
   pageNumberStyle: 'reactnator__page-number',
   activePageStyle: 'reactnator__page-number--active'
 }
