@@ -19,6 +19,9 @@
     "recompose": "^0.26.0",
     "scroll-to-target": "^0.0.8"
   },
+  "scripts": {
+    "build": "npx webpack"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.3",

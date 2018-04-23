@@ -1,4 +1,6 @@
-import { compose, withHandlers, lifecycle, withState } from 'recompose'
+import withHandlers from 'recompose/withHandlers'
+import compose from 'recompose/compose'
+import setDisplayName from 'recompose/setDisplayName'
 import scrollToTarget from 'scroll-to-target'
 
 const isClient = () => !!(
@@ -14,18 +16,20 @@ const scrollTop = ({ selector, speed, offset }) => {
     ) : null
 }
 
-const generateLink = (page, currentPage, total, link) => {
-  if (page === 'more' && currentPage !== total)
-    return { href: `${link}${currentPage + 1}` }
-  else if (page === 'less' && currentPage > 1)
-    return { href: `${link}${currentPage - 1}` }
-  else if (page >= 1 && page <= total && page !== currentPage)
-    return { href: `${link}${page}` }
-  else
-    return null
-}
-
 export default compose(
+  setDisplayName('src/enhancers/Reactnator/handlers.js'),
+	withHandlers({
+    generateLink: ({ link, currentPage, total }) => page => {
+      if (page === 'more' && currentPage !== total)
+        return { href: `${link}${currentPage + 1}` }
+      else if (page === 'less' && currentPage > 1)
+        return { href: `${link}${currentPage - 1}` }
+      else if (page >= 1 && page <= total && page !== currentPage)
+        return { href: `${link}${page}` }
+      else
+        return null
+    }
+  }),
 	withHandlers({
 		handleClick: ({ currentPage, total, onChange, scrollTo }) => page => () => {
       if (page === '...') return null
@@ -41,11 +45,11 @@ export default compose(
 
 			scrollTo ? scrollTop(scrollTo) : null
     },
-    Action: ({ type, link, currentPage, total }) => ({ style, onClick, children, page }) => type === 'link'
+    Action: ({ type }) => ({ style, onClick, children, page }) => type === 'link'
       ? (
         <a
           className={style}
-          { ...generateLink(page, currentPage, total, link) }
+          { ...generateLink(page) }
         >
           {children}
         </a>

@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import reactnatorContainer from '../../containers/Reactnator'
+import reactnatorEnhancer from '../../enhancers/Reactnator'
 import pagination from '../../helpers/dotPaginator'
 import './Reactnator.styl'
 
@@ -66,4 +66,4 @@ Reactnator.defaultProps = {
   activePageStyle: 'reactnator__page-number--active'
 }
 
-export default reactnatorContainer(Reactnator)
+export default reactnatorEnhancer(Reactnator)
