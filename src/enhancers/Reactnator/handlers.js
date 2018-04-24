@@ -45,7 +45,7 @@ export default compose(
 
 			scrollTo ? scrollTop(scrollTo) : null
     },
-    Action: ({ type }) => ({ style, onClick, children, page }) => type === 'link'
+    Action: ({ type, generateLink }) => ({ style, onClick, children, page }) => type === 'link'
       ? (
         <a
           className={style}

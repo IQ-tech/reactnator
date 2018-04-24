@@ -418,7 +418,8 @@ exports.default = (0, _compose2.default)((0, _setDisplayName2.default)('src/enha
     };
   },
   Action: function Action(_ref4) {
-    var type = _ref4.type;
+    var type = _ref4.type,
+        generateLink = _ref4.generateLink;
     return function (_ref5) {
       var style = _ref5.style,
           onClick = _ref5.onClick,
