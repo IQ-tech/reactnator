@@ -19,6 +19,10 @@ or you can use NPM aswell
 * Recompose
 * scroll-to-target
 
+### Next Features
+
+* Integration with React-Router (Today you can use `onChange` callback with browserHistory.push)
+
 ### Api Reference
 
 | Property | Type | Default | Description |
